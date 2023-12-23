@@ -14,6 +14,10 @@ const endpointSecret = process.env.STRIPE_SEC;
 
 const fakeCustomer = "Fake Customer";
 
+app.get("/test", (req, res) => {
+  res.send({ message: "It works!" });
+});
+
 app.post(
   "/webhook",
   express.raw({ type: "application/json" }),
