@@ -51,8 +51,6 @@ export const createInvoice = async (
     await page.locator("#invoice_invoice_date").fill(invoiceDate);
     await page.keyboard.press("Escape");
     await page.waitForTimeout(2000);
-    await page.screenshot({ path: "screenshot.png", fullPage: true });
-    await page.waitForTimeout(2000);
 
     await page.getByText(" Aggiungi prestazione ").click();
     await page.waitForTimeout(2000);
