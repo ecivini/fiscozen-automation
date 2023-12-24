@@ -1,15 +1,14 @@
 import { chromium } from "playwright";
 
-const fiscozenUrl = "https://app.fiscozen.it/app/login";
-const codiceAteco = "62.02.00";
-const prestazione = "Formazione in ambito programmazione Web";
-
 export const createInvoice = async (
   customerName: string,
   invoiceDate: string,
   amount: number
 ): Promise<string> => {
   try {
+    const fiscozenUrl = process.env.FISCOZEN_URL || "";
+    const codiceAteco = process.env.FISCOZEN_CODICE_ATECO || "";
+    const prestazione = process.env.FISCOZEN_PRESTAZIONE_MEMBERSHIP || "";
     const fiscozenUser = process.env.FISCOZEN_USER || "";
     const fiscozenPassword = process.env.FISCOZEN_PASSWORD || "";
 
