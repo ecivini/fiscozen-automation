@@ -5,7 +5,6 @@ export const createInvoice = async (
   invoiceDate: string,
   amount: number
 ): Promise<string> => {
-  try {
     const fiscozenUrl = process.env.FISCOZEN_URL || "";
     const codiceAteco = process.env.FISCOZEN_CODICE_ATECO || "";
     const prestazione = process.env.FISCOZEN_PRESTAZIONE_MEMBERSHIP || "";
@@ -15,9 +14,13 @@ export const createInvoice = async (
     const browser = await chromium.launch();
     const context = await browser.newContext();
     context.setDefaultTimeout(5000);
+try{
     const page = await context.newPage();
 
     await page.goto(fiscozenUrl);
+    await page.screenshot({path:"login.png"});
+    await page.waitForTimeout(2000);
+
     await page
       .getByRole("textbox", {
         name: "email",
@@ -31,6 +34,8 @@ export const createInvoice = async (
 
     await page.getByRole("button").click();
     await page.waitForTimeout(3000);
+    await page.screenshot({path:"logged.png"});
+    await page.waitForTimeout(2000);
 
     await page.getByRole("link", { name: "Fatture" }).click();
     await page.waitForTimeout(2000);
@@ -68,6 +73,7 @@ export const createInvoice = async (
     await browser.close();
     return "success";
   } catch (e) {
+    await browser.close();
     if (e instanceof Error) {
       return e.message;
     }
