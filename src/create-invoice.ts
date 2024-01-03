@@ -67,7 +67,7 @@ try{
 
     await page.getByLabel("Scegli ATECO").selectOption(codiceAteco);
     await page.waitForTimeout(2000);
-    await page.getByText(" Salva fattura ").click();
+    await page.getByText(" Crea fattura elettronica ").click();
     await page.waitForTimeout(2000);
 
     await browser.close();
