@@ -5,20 +5,20 @@ export const createInvoice = async (
   invoiceDate: string,
   amount: number
 ): Promise<string> => {
-    const fiscozenUrl = process.env.FISCOZEN_URL || "";
-    const codiceAteco = process.env.FISCOZEN_CODICE_ATECO || "";
-    const prestazione = process.env.FISCOZEN_PRESTAZIONE_MEMBERSHIP || "";
-    const fiscozenUser = process.env.FISCOZEN_USER || "";
-    const fiscozenPassword = process.env.FISCOZEN_PASSWORD || "";
+  const fiscozenUrl = process.env.FISCOZEN_URL || "";
+  const codiceAteco = process.env.FISCOZEN_CODICE_ATECO || "";
+  const prestazione = process.env.FISCOZEN_PRESTAZIONE_MEMBERSHIP || "";
+  const fiscozenUser = process.env.FISCOZEN_USER || "";
+  const fiscozenPassword = process.env.FISCOZEN_PASSWORD || "";
 
-    const browser = await chromium.launch();
-    const context = await browser.newContext();
-    context.setDefaultTimeout(5000);
-try{
+  const browser = await chromium.launch();
+  const context = await browser.newContext();
+  context.setDefaultTimeout(5000);
+  try {
     const page = await context.newPage();
 
     await page.goto(fiscozenUrl);
-    await page.screenshot({path:"login.png"});
+    await page.screenshot({ path: "login.png" });
     await page.waitForTimeout(2000);
 
     await page
@@ -34,7 +34,7 @@ try{
 
     await page.getByRole("button").click();
     await page.waitForTimeout(3000);
-    await page.screenshot({path:"logged.png"});
+    await page.screenshot({ path: "logged.png" });
     await page.waitForTimeout(2000);
 
     await page.getByRole("link", { name: "Fatture" }).click();
@@ -60,7 +60,6 @@ try{
     await page.waitForTimeout(2000);
     await page.locator("#description").fill(prestazione);
     await page.locator("#amount").fill(amount.toString());
-    await page.getByText(" Applica contributo GS INPS 4% ").click();
     await page.getByText(" Conferma ").click();
 
     await page.waitForTimeout(2000);
