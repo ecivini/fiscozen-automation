@@ -1,7 +1,7 @@
 FROM node 
 
 # Get the latest version of Playwright
-FROM mcr.microsoft.com/playwright:v1.34.0-jammy
+FROM mcr.microsoft.com/playwright:v1.40.1-jammy
 
 
 # Create app directory

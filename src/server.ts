@@ -21,6 +21,36 @@ app.get("/test", (req, res) => {
   res.send({ message: "It works!" });
 });
 
+app.get("/create-invoice-test", (request: Request, response: Response) => {
+  const amount = 25;
+  const customerName = fakeCustomer;
+  const date = formatDate(1711424611);
+
+  createInvoice(customerName, date, amount).then(async (res) => {
+    const options = {
+      from: '"Giuseppe Funicello" <info@giuppi.dev>',
+      to: "info@giuppi.dev",
+    };
+    if (res === "success") {
+      const successOptions = {
+        ...options,
+        subject: `Creata una nuova fattura`,
+        html: `<div><p>È stata creata una nuova fattura su Fiscozen.</p><p>Customer: ${customerName}</p><p>Cifra: ${amount}</p><p>data: ${date}</p></div>`,
+      };
+      await sendMail(successOptions);
+    } else {
+      const errorOpts = {
+        ...options,
+        subject: `Errore nella creazione di una nuova fattura`,
+        html: `<div><p>Creazione in erore per una nuova fattura su Fiscozen.</p><p>Customer: ${customerName}</p><p>Cifra: ${amount}</p><p>data: ${date}</p><p>Error: ${res}</p></div>`,
+      };
+      await sendMail(errorOpts);
+    }
+  });
+
+  response.send();
+});
+
 app.post(
   "/create-invoice",
   express.raw({ type: "application/json" }),
