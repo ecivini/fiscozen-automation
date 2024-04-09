@@ -13,7 +13,7 @@ export const createInvoice = async (
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
-  context.setDefaultTimeout(5000);
+  context.setDefaultTimeout(10000);
   try {
     const page = await context.newPage();
 
@@ -52,9 +52,9 @@ export const createInvoice = async (
     await page.getByText(customerName).click();
     await page.waitForTimeout(2000);
 
-    await page.locator("#invoice_invoice_date").fill(invoiceDate);
-    await page.keyboard.press("Escape");
-    await page.waitForTimeout(2000);
+    // await page.locator("#invoice_invoice_date").fill(invoiceDate);
+    // await page.keyboard.press("Escape");
+    // await page.waitForTimeout(2000);
 
     await page.getByText(" Aggiungi prestazione ").click();
     await page.waitForTimeout(2000);

@@ -12,11 +12,11 @@ ARG PORT=3001
 # Install app dependencies
 COPY package*.json ./
 
-RUN npm ci
+RUN npm i
 
 COPY . .
 
 RUN npm run build
 
 EXPOSE ${PORT}
-CMD [ "node", "dist/server.js" ]
+CMD [ "npm", "start" ]
